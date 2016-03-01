@@ -36,7 +36,7 @@ public partial class TTSHMasterPage_TTSH : System.Web.UI.MasterPage
                 if (HttpContext.Current.Session["MenuDT"] != null)
                 {
                     PopulateMenu();
-                    
+
                 }
                 else
                 {
