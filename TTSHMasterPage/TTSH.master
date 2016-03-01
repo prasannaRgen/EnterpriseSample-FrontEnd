@@ -81,8 +81,6 @@
                     <div class="row">
                         <div class="col-md-12">
 
-
-                            <%--<asp:Menu ID="UserMenu" runat="server" StaticEnableDefaultPopOutImage="false" Orientation="Horizontal" CssClass="msc-nav"  >--%>
                             <asp:Menu ID="UserMenu" runat="server" StaticEnableDefaultPopOutImage="false" Orientation="Horizontal" RenderingMode="List"
                                 MaximumDynamicDisplayLevels="3" CssClass="msc-nav">
                                 <StaticMenuItemStyle HorizontalPadding="10px" ItemSpacing="1px" VerticalPadding="5px"
