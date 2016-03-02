@@ -51,16 +51,16 @@
         enctype="multipart/form-data">
         <asp:HiddenField runat="server" ID="_repostcheckcode" />
         <label id="lblTime" runat="server" style="display: none"></label>
-<%--        <asp:ScriptManager ID="ToolkitScriptManager1" EnablePageMethods="true" EnablePartialRendering="true"
+        <asp:ScriptManager ID="ToolkitScriptManager1" EnablePageMethods="true" EnablePartialRendering="true"
             LoadScriptsBeforeUI="false" AsyncPostBackTimeout="360000"
             ScriptMode="Release"
             runat="server">
-        </asp:ScriptManager>--%>
-                <asp:ToolkitScriptManager ID="ToolkitScriptManager1" EnablePageMethods="true" EnablePartialRendering="true"
+        </asp:ScriptManager>
+        <%--<asp:ToolkitScriptManager ID="ToolkitScriptManager1" EnablePageMethods="true" EnablePartialRendering="true"
             LoadScriptsBeforeUI="false" AsyncPostBackTimeout="360000"
             ScriptMode="Release"
             runat="server">
-        </asp:ToolkitScriptManager>
+        </asp:ToolkitScriptManager>--%>
         <header>
             <div style="background-color: #333333; padding: 0px; height: 5px;"></div>
             <div class="container">
