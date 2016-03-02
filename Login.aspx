@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <a class="logo-head img-responsive" href="#">
-                        <img src="Images/TanTockSeng-Hospital-Logo.jpg" alt="Clinical Research &amp; Innovation (CRIO)" /></a>
+                        <img src="Images/TanTockSeng-Hospital-Logo_new.jpg" alt="Clinical Research &amp; Innovation (CRIO)" /></a>
                 </div>
                 <%--<div class="col-md-6">
                 <p class="top-search">
@@ -80,8 +80,8 @@
 
                     <p>&nbsp;</p>
 
-                    <h2>Clinical Research and Innovation Officee<span>Clinical Research Unit</span></h2>
-                    <p>Clinical Research and Innovation Office (CRIO) aims to lead, promote and coordinate research culture and activities to support the development of TTSH into a reputable world-class research centre. CRIO aligns its mission with Singapore’s emphasis on life science biomedical research. It supports the research endeavours of all the staff in TTSH.<a href="https://www.ttsh.com.sg/clinical-research-unit/">read more</a></p>
+                    <h2>Clinical Research and Innovation Office<span>Clinical Research Unit</span></h2>
+                    <p>Clinical Research and Innovation Office (CRIO) aims to lead, promote and coordinate research culture and activities to support the development of Click2Cloud into a reputable world-class research centre. CRIO aligns its mission with Singapore&#x27;s emphasis on life science biomedical research. It supports the research endeavours of all the staff in TTSH.<%--<a href="https://www.ttsh.com.sg/clinical-research-unit/">read more</a>--%></p>
 
                 </div>
                 <div class="col-md-6">
@@ -95,12 +95,12 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Clinical Research &amp; Innovation (CRIO) Database System</h4>
-                        <p>Website: http://www.ttsh.com.sg  Phone: (65) 6357 8898/9  Fax: (65) 6251 4095</p>
-                        <p>11 Jalan Tan Tock Seng, Singapore 308433</p>
+                        <p>Website: http://www.click2cloud.net  Phone: (65) 0712 224 8747</p>
+                        <p>Plot # 3, STPI Building, Parsodi IT Park, Nagpur 440022</p>
                     </div>
                     <div class="col-md-6 align-right">
-                        <h4>A Product of Tan Tock Seng Hospital</h4>
-                        <p>Copyright &copy; 2014 Tan Tock Seng Hospital, Singapore</p>
+                        <h4>A Product of Click2Cloud</h4>
+                        <p>Copyright &copy; 2015 Click2Cloud, Nagpur</p>
                     </div>
                 </div>
             </div>

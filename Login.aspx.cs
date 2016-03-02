@@ -54,7 +54,7 @@ public partial class _Default : System.Web.UI.Page
         try
         {
             //Session["WebApiUrl"] = "http://aspnet-example-webapi.cloudapps.click2cloud.net/".ToString();
-            Session["WebApiUrl"] = "http://aspvnext-example-ea-sample.cloudapps.click2cloud.net/".ToString();
+            Session["WebApiUrl"] = "http://aspvnext-example-webapittsh.cloudapps.click2cloud.net/".ToString();
             //Session["WebApiUrl"] = "http://localhost:50104/".ToString(); 
             System.Net.WebClient client = new System.Net.WebClient();
             client.Headers.Add("content-type", "application/json");//set your header here, you can add multiple headers
