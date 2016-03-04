@@ -16,7 +16,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             try {
-                CallAutocomplete();
+               // CallAutocomplete();
             }
             catch (err) { }
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(AfterPostBack)
@@ -162,11 +162,7 @@
         <div class="row margin-top frmAction">
             <div class="col-md-12">
                 <p style="text-align: left">
-
-
-
                     <asp:Button CssClass="action" ID="btnNew" title="Add New Project" runat="server" Text="Add New Project" OnClick="btnNew_Click" />
-
                 </p>
             </div>
         </div>
@@ -390,6 +386,7 @@
             </ContentTemplate>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="ddlParentProjName" EventName="SelectedIndexChanged" />
+
             </Triggers>
         </asp:UpdatePanel>
         <div class="row">
@@ -476,8 +473,8 @@
                                 <label>Department <b>*</b></label>
                                 <asp:HiddenField ID="HdnNewDeptId" runat="server" />
 
-                                <asp:TextBox ID="TxtNewDepartment" onpaste="return false;" placeholder="Type Keyword to search Department" CssClass="ctlinput" runat="server"></asp:TextBox>
-
+                                <%--<asp:TextBox ID="TxtNewDepartment" onpaste="return false;" placeholder="Type Keyword to search Department" CssClass="ctlinput" runat="server"></asp:TextBox>--%>
+                                <asp:DropDownList ID="TxtNewDepartment"  CssClass="ctlselect" runat="server"></asp:DropDownList>
                             </p>
                             <p>
                                 <label>First / Given Name <b>*</b></label>
@@ -530,12 +527,16 @@
             </div>
 
             <div class="row">
+                <asp:UpdatePanel runat="server" ID="updDept">
+                    <ContentTemplate>
                 <div class="col-md-6 col-sm-6">
                     <p>
                         <label>Department <b>*</b></label>
                         <asp:HiddenField ID="HdnDeptId" runat="server" />
                         <asp:HiddenField ID="HdnDeptTxt" runat="server" />
-                        <asp:TextBox ID="TxtDepartment" onpaste="return false;" placeholder="Type Keyword to search Department" onblur="ClearOnblur(this);" onKeydown="items('');" CssClass="ctlinput" runat="server"></asp:TextBox>
+                        <%--<asp:TextBox ID="TxtDepartment" onpaste="return false;" placeholder="Type Keyword to search Department" onblur="ClearOnblur(this);" onKeydown="items('');" CssClass="ctlinput" runat="server"></asp:TextBox>--%>
+                            <asp:DropDownList ID="ddlDepartment" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartment_SelectedIndexChanged" CssClass="ctlselect" runat="server">
+                            </asp:DropDownList>
                     </p>
                     <p>
                         <label>PI Email </label>
@@ -552,14 +553,20 @@
                         <label>PI Name<b>*</b></label>
                         <asp:HiddenField ID="HdnpiId" runat="server" />
                         <asp:HiddenField ID="HdnPITxt" runat="server" />
-                        <asp:TextBox ID="TxtPIName" onpaste="return false;" placeholder="Type Keyword to search PI" onblur="CheckPiOnBlur(this);"  CssClass="ctlinput" runat="server"></asp:TextBox>
-
+                        <%--<asp:TextBox ID="TxtPIName" onpaste="return false;" placeholder="Type Keyword to search PI" onblur="CheckPiOnBlur(this);"  CssClass="ctlinput" runat="server"></asp:TextBox>--%>
+                        <asp:DropDownList ID="TxtPIName" OnSelectedIndexChanged="TxtPIName_SelectedIndexChanged" AutoPostBack="true" CssClass="ctlselect" runat="server"></asp:DropDownList>
                     </p>
                     <p>
                         <label>PI MCR No.</label>
                         <asp:TextBox ID="txtPiMCRNo" CssClass="ctlinput" runat="server"></asp:TextBox>
                     </p>
                 </div>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="ddlDepartment" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="TxtPIName" EventName="SelectedIndexChanged" />
+                    </Triggers>
+                    </asp:UpdatePanel>
             </div>
             <div class="row margin-top frmAction">
                 <div class="col-md-12">
@@ -580,7 +587,7 @@
                 <h3 class="frmHead" data-frm="frmother">Other Detail <span>( - )</span></h3>
             </div>
         </div>
-        <div class="frm frmother" style="display: block;">
+        <div class="frm frmother" style="display: none;">
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <p>
@@ -597,7 +604,7 @@
                         <div runat="server" id="CheckBoxListDiv" class="CheckboxList">
                             <asp:CheckBoxList ID="chkboxlist" CssClass="ctlselect" CellPadding="0" CellSpacing="0" runat="server"></asp:CheckBoxList>
                         </div>
-                        <asp:PopupControlExtender ID="Pexd" PopupControlID="CheckBoxListDiv" Position="Bottom" TargetControlID="TextSearch" runat="server"></asp:PopupControlExtender>
+                        <%--<asp:PopupControlExtender ID="Pexd" PopupControlID="CheckBoxListDiv" Position="Bottom" TargetControlID="TextSearch" runat="server"></asp:PopupControlExtender>--%>
                     </p>
 
 
@@ -777,7 +784,7 @@
         }
 
         function ClearPiDetails() {
-            $('#<%=TxtDepartment.ClientID%>').bind("mouseup", function (e) {
+            $('#<%=ddlDepartment.ClientID%>').bind("mouseup", function (e) {
                 var $input = $(this),
 					oldValue = $input.val();
 
@@ -897,8 +904,8 @@
 
         function CallNewPi() {
 
-            SearchText('<%=TxtNewDepartment.ClientID%>', '<%=HdnNewDeptId.ClientID%>', 10, "Department~spAutoComplete");
-            SearchText('<%=TxtDepartment.ClientID%>', '<%=HdnDeptId.ClientID%>', 10, "Department~spAutoComplete", FillPi, '<%=HdnDeptTxt.ClientID%>');
+          //  SearchText('<%=TxtNewDepartment.ClientID%>', '<%=HdnNewDeptId.ClientID%>', 10, "Department~spAutoComplete");
+         //   SearchText('<%=ddlDepartment.ClientID%>', '<%=HdnDeptId.ClientID%>', 10, "Department~spAutoComplete", FillPi, '<%=HdnDeptTxt.ClientID%>');
             ClearCloseNewPiSection();
             $('[id*=TxtNewDepartment]').focus();
             return false;
@@ -942,8 +949,8 @@
         }
         function AfterPostBack() {
 
-            SearchText('<%=TxtNewDepartment.ClientID%>', '<%=HdnNewDeptId.ClientID%>', 10, "Department~spAutoComplete");
-            SearchText('<%=TxtDepartment.ClientID%>', '<%=HdnDeptId.ClientID%>', 10, "Department~spAutoComplete", FillPi, '<%=HdnDeptTxt.ClientID%>');
+       //     SearchText('<%=TxtNewDepartment.ClientID%>', '<%=HdnNewDeptId.ClientID%>', 10, "Department~spAutoComplete");
+       //     SearchText('<%=ddlDepartment.ClientID%>', '<%=HdnDeptId.ClientID%>', 10, "Department~spAutoComplete", FillPi, '<%=HdnDeptTxt.ClientID%>');
             TrimParentProject();
             SetCollabProjectCategory();
             ApplyDOScript(); ClearPiDetails();
@@ -951,8 +958,8 @@
         }
 
         function CallAutocomplete() {
-            SearchText('<%=TxtNewDepartment.ClientID%>', '<%=HdnNewDeptId.ClientID%>', 10, "Department~spAutoComplete");
-            SearchText('<%=TxtDepartment.ClientID%>', '<%=HdnDeptId.ClientID%>', 10, "Department~spAutoComplete", FillPi, '<%=HdnDeptTxt.ClientID%>');
+        //    SearchText('<%=TxtNewDepartment.ClientID%>', '<%=HdnNewDeptId.ClientID%>', 10, "Department~spAutoComplete");
+       //     SearchText('<%=ddlDepartment.ClientID%>', '<%=HdnDeptId.ClientID%>', 10, "Department~spAutoComplete", FillPi, '<%=HdnDeptTxt.ClientID%>');
             var mode = document.getElementById('<%=HdnMode.ClientID%>').value;
 
             if (mode.toLowerCase() == 'new' || mode.toLowerCase() == 'insert') {

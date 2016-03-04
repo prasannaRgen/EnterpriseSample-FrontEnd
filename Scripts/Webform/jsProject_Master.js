@@ -119,7 +119,7 @@ function GetPI_MasterDetailsByID(ID, txtPIEmail, txtPiPhoneNo, txtPiMCRNo) {
 
 function ClearCloseMorePiSection() {
 
-    $("[id*=TxtDepartment]").val('');
+    //$("[id*=TxtDepartment]").val('');
     $("[id*=TxtPIName]").val('');
     $("[id*=txtPIEmail]").val('');
     $("[id*=txtPiPhoneNo]").val('');
@@ -141,8 +141,9 @@ function ClearCloseNewPiSection() {
 }
 
 
-function SaveMorePi(TxtDepartment, TxtPIName, txtPIEmail, txtPiPhoneNo, txtPiMCRNo, hdnPiID, rptrPIDetails) {
-    TxtDepartment = document.getElementById(TxtDepartment);
+function SaveMorePi(ddlDepartment, TxtPIName, txtPIEmail, txtPiPhoneNo, txtPiMCRNo, hdnPiID, rptrPIDetails) {
+    /*saving*/
+    TxtDepartment = document.getElementById(ddlDepartment);
     TxtPIName = document.getElementById(TxtPIName);
     hdnPiID = document.getElementById(hdnPiID);
     txtPIEmail = document.getElementById(txtPIEmail);
@@ -150,7 +151,9 @@ function SaveMorePi(TxtDepartment, TxtPIName, txtPIEmail, txtPiPhoneNo, txtPiMCR
     txtPiMCRNo = document.getElementById(txtPiMCRNo);
     var DeptId = $("[id*=HdnDeptId]");
 
-    if (TxtDepartment.value.trim() == "") {
+    //if (TxtDepartment.value.trim() == "") {
+    if (TxtDepartment.value == "0" || TxtDepartment.value == "")
+    {
         MessageBox("Please select Department");
         TxtDepartment.focus();
         return false;
@@ -160,7 +163,8 @@ function SaveMorePi(TxtDepartment, TxtPIName, txtPIEmail, txtPiPhoneNo, txtPiMCR
         return false;
     }
 
-    if (TxtPIName.value.trim() == "") {
+    //if (TxtPIName.value.trim() == "") {
+    if (TxtPIName.value == "0" || TxtPIName.value == "") {
         MessageBox("Please select PI");
         TxtPIName.focus();
         return false;
@@ -187,7 +191,7 @@ function SaveMorePi(TxtDepartment, TxtPIName, txtPIEmail, txtPiPhoneNo, txtPiMCR
     }
 
 
-    var table = '<tr piId=' + hdnPiID.value + '><td><p>' + TxtDepartment.value + '</p></td><td><p>' + TxtPIName.value + '</p></td><td><p>' + txtPIEmail.value + '</p></td><td><p>' + txtPiPhoneNo.value + '</p></td><td><p>' + txtPiMCRNo.value + '</p></td>'
+    var table = '<tr piId=' + hdnPiID.value + '><td><p>' + TxtDepartment.options[TxtDepartment.selectedIndex].text + '</p></td><td><p>' + TxtPIName.options[TxtPIName.selectedIndex].text + '</p></td><td><p>' + txtPIEmail.value + '</p></td><td><p>' + txtPiPhoneNo.value + '</p></td><td><p>' + txtPiMCRNo.value + '</p></td>'
     table += '<td style="width: 45px;"><p  class="grid-action"><a><img title="Delete Pi Detail" alt="" onclick=delPiRows(this) return false; src="../Images/icon-delete.png"></a></p></td></tr>'
     $('#tblPiDetail  tbody').append(table);
 

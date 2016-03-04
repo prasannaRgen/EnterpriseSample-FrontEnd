@@ -18,6 +18,15 @@ public class ProjectMasterModel
     public List<PI_Master> DEPT_PI { get; set; }
     public string mode { get; set; }
 }
+public class Depatrment_PI
+{
+    public int i_PI_ID { get; set; }
+    public int i_dept_id { get; set; }
+    public string s_email { get; set; }
+    public string s_name { get; set; }
+    public string s_mcrno { get; set; }
+    public string s_phone { get; set; }
+}
 public partial class TTSHMasterPage_frmProject_Master : System.Web.UI.Page
 {
 
@@ -30,6 +39,30 @@ public partial class TTSHMasterPage_frmProject_Master : System.Web.UI.Page
         SearchBox.ButtonClearClick += SearchBox_ButtonClearClick;
         if (!IsPostBack)
         {
+            System.Net.WebClient client = new System.Net.WebClient();
+            client.Headers.Add("content-type", "application/json");//set your header here, you can add multiple headers
+            string arr = client.DownloadString(string.Format("{0}api/DropDownData/PI_Department", Session["WebApiUrl"].ToString()));
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<clsDropDown> departmentData = serializer.Deserialize<List<clsDropDown>>(arr);
+
+            if (departmentData != null && departmentData.Count > 0)
+            {
+                ddlDepartment.DataSource = departmentData;
+                ddlDepartment.DataValueField = "ValueField";
+                ddlDepartment.DataTextField = "DisplayField";
+                ddlDepartment.DataBind();
+                ddlDepartment.Items.Insert(0, new ListItem("-- Select--", "0"));
+                TxtPIName.Items.Insert(0, new ListItem("-- Select--", "0"));
+
+                TxtNewDepartment.DataSource = departmentData;
+                TxtNewDepartment.DataValueField = "ValueField";
+                TxtNewDepartment.DataTextField = "DisplayField";
+                TxtNewDepartment.DataBind();
+                TxtNewDepartment.Items.Insert(0, new ListItem("-- Select--", "0"));
+            }
+            
+            //http://localhost:50104/api/DropDownData?GetDeptPi&deptId=6
+
             ClearHDN();
             ddlChildParent.Attributes.Add("title", "");
             TextBox t = ((TextBox)(SearchBox.FindControl("txtSearch")));
@@ -472,7 +505,7 @@ public partial class TTSHMasterPage_frmProject_Master : System.Web.UI.Page
         try
         {
             pi.i_ID = Convert.ToInt32("1");
-            pi.i_Dept_ID = Convert.ToInt32(HdnNewDeptId.Value);
+            pi.i_Dept_ID = Convert.ToInt32(TxtNewDepartment.SelectedValue); //Convert.ToInt32(HdnNewDeptId.Value);
             pi.s_Firstname = txtPiFirstName.Text;
             pi.s_Lastname = txtPiLastName.Text;
             pi.s_Email = txtPIEmailAddress.Text;
@@ -666,7 +699,7 @@ public partial class TTSHMasterPage_frmProject_Master : System.Web.UI.Page
         btnMorePiCancel.Attributes.Add("onclick", "javascript:return ClearCloseMorePiSection();");
         btnPICancel.Attributes.Add("onclick", "javascript:return CallNewPi();");
         TxtDispProjId.Attributes.Add("onblur", "javascript:return GetValidatefrmDB('" + HdnError.ClientID + "','ValidateDispID' ,'" + TxtDispProjId.ClientID + "','" + HdnId.Value + "');");
-        btnMorePiSave.Attributes.Add("onclick", "javascript:return SaveMorePi('" + TxtDepartment.ClientID + "', '" + TxtPIName.ClientID + "','" + txtPIEmail.ClientID + "', '" + txtPiPhoneNo.ClientID + "', '" + txtPiMCRNo.ClientID + "', '" + HdnpiId.ClientID + "','" + rptrPIDetails.ClientID + "');");
+       btnMorePiSave.Attributes.Add("onclick", "javascript:return SaveMorePi('" + ddlDepartment.ClientID + "', '" + TxtPIName.ClientID + "','" + txtPIEmail.ClientID + "', '" + txtPiPhoneNo.ClientID + "', '" + txtPiMCRNo.ClientID + "', '" + HdnpiId.ClientID + "','" + rptrPIDetails.ClientID + "');");
         btnSave.Attributes.Add("onclick", "javascript:return IsValidate('" + HdnPi_ID.ClientID + "','" + chkboxlist.ClientID + "','" + TxtDispProjId.ClientID + "', '" + TxtprojTitle.ClientID + "', '" + TxtstartDate.ClientID + "', '" + ddlProjCategory.ClientID + "','" + ddlProjSubType.ClientID + "', '" + ddlProjType.ClientID + "', '" + ddlFeasibilityStatus.ClientID + "', '" + ddlCollbrationInv.ClientID + "', '" + ddlfundingReq.ClientID + "', '" + ddlParentProjName.ClientID + "','" + ddlstartbyTTSH.ClientID + "', '" + ddlChildParent.ClientID + "', '" + txtParentProjId.ClientID + "','" + HdnCoordinatorId.ClientID + "','" + HdnCoordinatorText.ClientID + "', '" + HdnMode.ClientID + "');");
         ddlChildParent.Attributes.Add("onchange", "javascript:EnableParentControls(this, '" + txtParentProjId.ClientID + "', '" + ddlParentProjName.ClientID + "');");
         btnPISave.Attributes.Add("onclick", "javascript:return ValidateNewPi('" + TxtNewDepartment.ClientID + "', '" + txtPiFirstName.ClientID + "', '" + txtPIEmailAddress.ClientID + "','" + txtPiLastName.ClientID + "', '" + txtPIMCR_NO.ClientID + "');");
@@ -876,5 +909,64 @@ public partial class TTSHMasterPage_frmProject_Master : System.Web.UI.Page
         }
 
         #endregion
+    }
+
+    protected void ddlDepartment_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            System.Net.WebClient client = new System.Net.WebClient();
+            client.Headers.Add("content-type", "application/json");//set your header here, you can add multiple headers
+            string arr = client.DownloadString(string.Format("{0}api/DropDownData?GetDeptPi&deptId={1}", Session["WebApiUrl"].ToString(),ddlDepartment.SelectedValue));
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<Depatrment_PI> PiData = serializer.Deserialize<List<Depatrment_PI>>(arr);
+            //http://localhost:50104/api/DropDownData?GetDeptPi&deptId=6
+            if (PiData != null && PiData.Count > 0)
+            {
+                Session["PiData"] = PiData;
+                TxtPIName.DataSource = PiData;
+                TxtPIName.DataValueField = "i_PI_ID";
+                TxtPIName.DataTextField = "s_name";
+                TxtPIName.DataBind();
+                TxtPIName.Items.Insert(0, new ListItem("-- Select--", "0"));
+            }
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }
+
+    protected void TxtPIName_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            List<Depatrment_PI> PiData = (List<Depatrment_PI>)Session["PiData"];
+            if (PiData != null && PiData.Count > 0)
+            {
+                //var FilteredPi = PiData.Where(z => z.i_PI_ID.ToString().Equals(TxtPIName.SelectedValue));
+                //if (FilteredPi != null && FilteredPi.Count() > 0)
+                //{
+                //    txtPiMCRNo.Text     = FilteredPi.Select(y => y.s_mcrno).ToString();
+                //    txtPiPhoneNo.Text   = FilteredPi.Select(y => y.s_phone).ToString();
+                //    txtPIEmail.Text         = FilteredPi.Select(y => y.s_email).ToString();
+                //}
+                HdnpiId.Value = TxtPIName.SelectedValue;
+                for (int i = 0; i < PiData.Count; i++)
+                {
+                    if (PiData[i].i_PI_ID.ToString() == TxtPIName.SelectedValue)
+                    {
+                        txtPiMCRNo.Text = PiData[i].s_mcrno;
+                        txtPiPhoneNo.Text = PiData[i].s_phone;
+                        txtPIEmail.Text = PiData[i].s_email;
+                    }
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            
+        }
     }
 }

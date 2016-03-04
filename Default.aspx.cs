@@ -11,4 +11,8 @@ public partial class _Default : System.Web.UI.Page
     {
 
     }
+
+    protected void btnHidden_OnClick(object sender, EventArgs e)
+    {
+    }
 }
